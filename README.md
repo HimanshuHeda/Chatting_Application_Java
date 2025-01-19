@@ -64,7 +64,7 @@ A desktop-based chatting application implemented in **Java Swing**, featuring se
    - Messages sent from the client will now appear on the server and vice versa.
 
 ### Screenshots
-[Add screenshots of the client and server-side interfaces for a better visual overview.]
+![image](https://github.com/user-attachments/assets/d6c7e1a2-13f5-400c-b3d6-a8dc6073c7ea)
 
 ## Folder Structure
 ```
