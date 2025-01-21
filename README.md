@@ -66,6 +66,9 @@ A desktop-based chatting application implemented in **Java Swing**, featuring se
 ### Screenshots
 ![image](https://github.com/user-attachments/assets/d6c7e1a2-13f5-400c-b3d6-a8dc6073c7ea)
 
+![Screenshot 2025-01-20 224506](https://github.com/user-attachments/assets/c50d3ed3-fda7-48e4-b805-d0ca343ea1f3)
+
+
 ## Folder Structure
 ```
 ├── src
