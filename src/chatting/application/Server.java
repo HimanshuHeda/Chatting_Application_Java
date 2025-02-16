@@ -9,6 +9,76 @@ import java.text.*;
 import java.net.*;
 import java.io.*;
 
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+public class Server {
+    private ServerSocket serverSocket;
+
+    public Server(int port) {
+        try {
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        while (true) {
+            try {
+                Socket clientSocket = serverSocket.accept();
+                new ClientHandler(clientSocket).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static class ClientHandler extends Thread {
+        private Socket socket;
+        private BufferedReader reader;
+        private BufferedWriter writer;
+
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+            try {
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void run() {
+            String receivedMessage;
+            try {
+                while ((receivedMessage = reader.readLine()) != null) {
+                    String decryptedMessage = AESUtil.decrypt(receivedMessage);
+                    System.out.println("Client: " + decryptedMessage);
+
+                    // Echo back the message
+                    String response = "Server received: " + decryptedMessage;
+                    String encryptedResponse = AESUtil.encrypt(response);
+                    writer.write(encryptedResponse);
+                    writer.newLine();
+                    writer.flush();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+
+
 public class Server implements ActionListener{
     
     JTextField text;
